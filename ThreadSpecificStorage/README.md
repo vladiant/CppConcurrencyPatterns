@@ -1,5 +1,7 @@
 # Thread-Specific Storage
 
+* Dealing with Sharing Pattern
+
 * Thread-specific storage enables global state within a
 thread.
 

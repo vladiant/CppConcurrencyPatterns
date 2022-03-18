@@ -1,5 +1,23 @@
 # C++ Concurrency Patterns
 
+## Synchronization Patterns
+
+### Dealing with Sharing
+* Copied Value
+* Thread-Specific Storage
+* Future
+
+### Dealing with Mutation
+* Scoped Locking
+* Strategized Locking
+* Thread-Safe Interface
+* Guarded Suspension
+
+## Concurrent Architecture
+* Active Object
+* Monitor Object
+* Reactor
+
 ## References
 * [Concurrency Patterns - Rainer Grimm - CppCon 2021](https://www.youtube.com/watch?v=A3DQxZCtKqo)
 * [Pattern-Oriented Software Architecture](https://en.wikipedia.org/wiki/Pattern-Oriented_Software_Architecture)

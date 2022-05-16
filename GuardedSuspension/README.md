@@ -2,8 +2,7 @@
 
 * Dealing with Mutation Pattern
 
-* A guarded suspension consists of a lock and a condition,
-which has to be fulfilled by the calling thread.
+* A guarded suspension consists of a lock and a condition, which has to be fulfilled by the calling thread.
 
 ## Usage:
 
@@ -16,11 +15,9 @@ meet.
 
 ## Variations:
 
-### The waiting thread is notified about the state change or asks for
-the state change.
+### The waiting thread is notified about the state change or asks for the state change.
 
-* Push principle: condition variables, future/promise pairs, atomics
-(C++20), and semaphores (C++20)
+* Push principle: condition variables, future/promise pairs, atomics (C++20), and semaphores (C++20)
 
 * Pull principle: not natively supported in C++
 
@@ -30,5 +27,4 @@ the state change.
 
 ### The notification is sent to one or all waiting threads.
 
-* Shared futures, condition variables, atomics (C++20), and
-semaphores (C++20)
+* Shared futures, condition variables, atomics (C++20), and semaphores (C++20)

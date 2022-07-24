@@ -1,4 +1,4 @@
-# Thread-Specific Storage
+# Guarded Suspension
 
 * Dealing with Mutation Pattern
 

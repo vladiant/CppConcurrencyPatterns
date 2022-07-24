@@ -31,3 +31,9 @@
 * A long-running event handler can block the Reactor.
 
 * The inversion of control makes testing and debugging more difficult.
+
+## Examples
+* <https://github.com/r4nd0m6uy/reactor_example>
+* <https://github.com/mirzachi/reactor-pattern-example>
+* [Patterns in C – Part 5: REACTOR](https://www.adamtornhill.com/Patterns%20in%20C%205,%20REACTOR.pdf)
+* <https://github.com/adamtornhill/PatternsInC/tree/master/5_Reactor>

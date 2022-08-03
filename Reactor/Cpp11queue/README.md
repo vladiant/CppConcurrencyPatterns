@@ -1,0 +1,2 @@
+# Links
+* [Reactor pattern in modern C++. Please comment on coding improvements to be done](https://codereview.stackexchange.com/questions/249607/reactor-pattern-in-modern-c-please-comment-on-coding-improvements-to-be-done)

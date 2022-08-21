@@ -8,9 +8,7 @@ from the method invocation.
   * Each method invocation is stored in an activation list.
   * A scheduler triggers the method execution.
 
-## Diagram
-
-## Components
+## Sequence Diagram
 
 ```
      ┌──────┐          ┌─────┐          ┌──────┐          ┌───────────────┐          ┌─────────┐          ┌───────┐          ┌───────┐
@@ -73,6 +71,8 @@ from the method invocation.
      │Client│          │Proxy│          │Future│          │Activation List│          │Scheduler│          │Request│          │Servant│
      └──────┘          └─────┘          └──────┘          └───────────────┘          └─────────┘          └───────┘          └───────┘
 ```
+
+## Components
 
 ### Proxy
 * Proxy for the member functions on the active object

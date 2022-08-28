@@ -14,6 +14,11 @@
 
 * When an event arrives, the Reactor is notified and dispatches it to the specific service.
 
+
+## Class Diagram
+![](reactor.svg)
+
+
 ## Advantages
 
 * A clear separation of framework and application logic.

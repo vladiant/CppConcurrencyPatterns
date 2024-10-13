@@ -49,7 +49,6 @@ void writer(int value) {
     std::cout << std::this_thread::get_id() << "\tWrite: " << value << '\n';
     data.push(value);
   }
-  resource.release();
 
   endWrite();
 }

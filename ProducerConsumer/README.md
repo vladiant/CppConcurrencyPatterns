@@ -34,4 +34,6 @@ Uses only two semaphores and doesn't need an array of readers to read the data i
 ## References
 * [Producer–consumer problem](https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem)
 * [Readers–writers problem](https://en.wikipedia.org/wiki/Readers%E2%80%93writers_problem)
+* [Implementing Go-style Channels in C++ from scratch](https://jyotinder.substack.com/p/implementing-go-channels-in-cpp)
+* <https://github.com/JyotinderSingh/CppChan/>
 

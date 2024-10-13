@@ -36,4 +36,6 @@ Uses only two semaphores and doesn't need an array of readers to read the data i
 * [Readers–writers problem](https://en.wikipedia.org/wiki/Readers%E2%80%93writers_problem)
 * [Implementing Go-style Channels in C++ from scratch](https://jyotinder.substack.com/p/implementing-go-channels-in-cpp)
 * <https://github.com/JyotinderSingh/CppChan/>
+* [C++ Channel: A thread-safe container for sharing data between threads](https://blog.andreiavram.ro/cpp-channel-thread-safe-container-share-data-threads/)
+* <https://github.com/andreiavrammsd/cpp-channel/>
 

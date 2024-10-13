@@ -1,6 +1,21 @@
 ## Producer/Consumer pattern
 The Producer/Consumer pattern is used to decouple processes that produce and consume data at different rates. The Producer/Consumer pattern's parallel loops are broken down into two categories; those that produce data, and those that consume the data produced.
 
+### Dijkstra's bounded buffer
+* The buffer can store N portions or elements.
+* The "number of queueing portions" semaphore counts the filled locations in the buffer
+* The "number of empty positions" semaphore counts the empty locations in the buffer
+* The "buffer manipulation" semaphore works as mutex for the buffer put and get operations.
+
+### Using monitors
+Monitor is a shared variable and the set of meaningful operations on it. It is used to control the scheduling of resources among individual processes.
+
+### Using channels
+An alternative to explicit naming of source and destination would be to name a port through which communication is to take place.
+
+### Without semaphores
+Bounded buffer solution for one producer and one consumer.
+
 ## Reader/Writer pattern
 The Reader-Writer pattern addresses scenarios where multiple threads read shared data, but only one thread can write at a time.
 

@@ -13,7 +13,7 @@ Monitor is a shared variable and the set of meaningful operations on it. It is u
 ### Using channels
 An alternative to explicit naming of source and destination would be to name a port through which communication is to take place.
 
-### Without semaphores
+### Lamport's without semaphores
 Bounded buffer solution for one producer and one consumer.
 
 ## Reader/Writer pattern

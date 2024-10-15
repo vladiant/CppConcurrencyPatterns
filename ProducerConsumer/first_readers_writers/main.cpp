@@ -112,7 +112,6 @@ int main() {
       writer(messagesCount.fetch_add(1));
     }
   }};
-  t3.join();
 
   std::jthread t4{[]() {
     while (auto result = reader()) {

@@ -8,6 +8,9 @@ std::mutex mut;
 
 class Critical{
 
+   Critical() {
+       std::cout << "Critical this: " << (void*) this << std::endl;
+   }
 public:
     void interface1() {
         std::lock_guard<std::mutex> lockGuard(mut);

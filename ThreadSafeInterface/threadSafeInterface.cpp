@@ -4,10 +4,12 @@
 #include <mutex>
 #include <thread>
 
+std::mutex mut;
+
 class Critical{
 
 public:
-    void interface1() const {
+    void interface1() {
         std::lock_guard<std::mutex> lockGuard(mut);
         implementation1();
     }
@@ -21,21 +23,19 @@ public:
    
 private: 
     void implementation1() const {
-        std::cout << "implementation1: " 
+        std::cout << "  implementation1: " 
                   << std::this_thread::get_id() << '\n';
     }
-    void implementation2(){
+    void implementation2() const {
         std::cout << "    implementation2: " 
                   << std::this_thread::get_id() << '\n';
+        std::this_thread::sleep_for(10ms);
+
     }
-    void implementation3(){    
+    void implementation3() const{    
         std::cout << "        implementation3: " 
                   << std::this_thread::get_id() << '\n';
     }
-  
-
-mutable std::mutex mut;
-
 };
 
 int main(){
@@ -43,7 +43,7 @@ int main(){
     std::cout << '\n';
     
     std::thread t1([]{ 
-        const Critical crit;
+        Critical crit;
         crit.interface1();
     });
     

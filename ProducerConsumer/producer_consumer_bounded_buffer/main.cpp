@@ -4,6 +4,8 @@
 #include <semaphore>
 #include <thread>
 
+constexpr int kMaxMessagesCount = 10;
+
 constexpr int kBufferSize = 3;
 
 std::atomic_uint messagesCount{0};
@@ -35,7 +37,7 @@ auto take_portion_from_buffer() {
 void process_portion_taken([[maybe_unused]] Portion&& portion) {}
 
 void producer() {
-  for (;;) {
+  for (int i = 0; i < kMaxMessagesCount; i++) {
     Portion portion = produce_next_portion();
 
     numberEmptyPositions.acquire();

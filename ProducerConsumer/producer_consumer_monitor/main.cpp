@@ -1,7 +1,10 @@
 #include <atomic>
 #include <condition_variable>
 #include <iostream>
+#include <optional>
 #include <thread>
+
+constexpr int kMaxMessagesCount = 10;
 
 constexpr int kBufferSize = 3;
 
@@ -41,7 +44,7 @@ class BoundedBuffer {
     nonempty.notify_one();
   }
 
-  Portion remove() {
+  std::optional<Portion> remove() {
     std::unique_lock<std::mutex> lck(mtx);
     nonempty.wait(lck, [&] { return !(0 == count); });
 
@@ -61,7 +64,7 @@ class BoundedBuffer {
 BoundedBuffer buffer;
 
 void producer() {
-  for (;;) {
+  for (int i = 0; i < kMaxMessagesCount; i++) {
     Portion portion = produce_next_portion();
     buffer.append(std::move(portion));
   }
@@ -70,7 +73,10 @@ void producer() {
 void consumer() {
   for (;;) {
     auto portion = buffer.remove();
-    process_portion_taken(std::move(portion));
+    if (!portion) {
+      return;
+    }
+    process_portion_taken(std::move(*portion));
   }
 }
 

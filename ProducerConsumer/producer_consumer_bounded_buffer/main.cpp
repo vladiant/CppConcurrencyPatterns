@@ -1,5 +1,6 @@
 #include <atomic>
 #include <iostream>
+#include <optional>
 #include <queue>
 #include <semaphore>
 #include <thread>
@@ -7,6 +8,8 @@
 constexpr int kMaxMessagesCount = 10;
 
 constexpr int kBufferSize = 3;
+
+constexpr auto kTimeout = std::chrono::seconds(1);
 
 std::atomic_uint messagesCount{0};
 
@@ -27,8 +30,10 @@ auto produce_next_portion() {
 
 void add_portion_to_buffer(Portion&& portion) { buffer.emplace(portion); }
 
-auto take_portion_from_buffer() {
-  // Buffer is never empty here
+std::optional<Portion> take_portion_from_buffer() {
+  if (buffer.empty()) {
+    return std::nullopt;
+  }
   auto portion = buffer.front();
   buffer.pop();
   return portion;
@@ -53,11 +58,17 @@ void producer() {
 
 void consumer() {
   for (;;) {
-    numberQueueingPortions.acquire();
+    numberQueueingPortions.try_acquire_for(kTimeout);
     Portion portion;
     {
       std::lock_guard lock{bufferManipulation};
-      portion = take_portion_from_buffer();
+
+      auto result = take_portion_from_buffer();
+      if (!result) {
+        return;
+      }
+
+      portion = *result;
       std::cout << std::this_thread::get_id() << "\tConsume: " << portion.data
                 << '\n';
     }
@@ -71,15 +82,6 @@ int main() {
   std::jthread t2{consumer};
   std::jthread t3{producer};
   std::jthread t4{consumer};
-
-  // Stop producers
-  t1.join();
-  t3.join();
-
-  {
-    std::lock_guard lock{bufferManipulation};
-    std::cout << std::this_thread::get_id() << "\tProducers stopped" << '\n';
-  }
 
   return 0;
 }

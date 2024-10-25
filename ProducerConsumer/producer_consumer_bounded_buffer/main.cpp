@@ -72,5 +72,14 @@ int main() {
   std::jthread t3{producer};
   std::jthread t4{consumer};
 
+  // Stop producers
+  t1.join();
+  t3.join();
+
+  {
+    std::lock_guard lock{bufferManipulation};
+    std::cout << std::this_thread::get_id() << "\tProducers stopped" << '\n';
+  }
+
   return 0;
 }

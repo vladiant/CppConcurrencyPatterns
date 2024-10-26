@@ -38,7 +38,9 @@ void producer() {
                 << '\n';
     }
 
-    buffer.send(portion);
+    if (!buffer.try_send(portion) && buffer.is_closed()) {
+      return;
+    }
   }
 }
 
@@ -53,6 +55,8 @@ void consumer() {
       }
 
       process_portion_taken(std::move(*portion));
+    } else {
+      return;
     }
   }
 }
@@ -62,6 +66,14 @@ int main() {
   std::jthread t2{consumer};
   std::jthread t3{producer};
   std::jthread t4{consumer};
+
+  std::this_thread::sleep_for(std::chrono::seconds(2));
+  // Printing only
+  {
+    std::lock_guard lock{printMutex};
+    std::cout << "Close channel\n";
+    buffer.close();
+  }
 
   return 0;
 }

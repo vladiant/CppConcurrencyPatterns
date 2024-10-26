@@ -8,6 +8,8 @@ constexpr int kMaxMessagesCount = 10;
 
 constexpr int kBufferSize = 3;
 
+constexpr auto kTimeout = std::chrono::seconds(1);
+
 std::atomic_uint messagesCount{0};
 
 struct Portion {
@@ -21,9 +23,9 @@ auto produce_next_portion() {
 void process_portion_taken([[maybe_unused]] Portion&& portion) {}
 
 class BoundedBuffer {
-  Portion buffer[kBufferSize];  // 0..kBufferSize-1
-  unsigned head{0}, tail{0};    // 0..kBufferSize-1
-  unsigned count{0};            // 0..kBufferSize
+  Portion buffer[kBufferSize];     // 0..kBufferSize-1
+  unsigned head{0}, tail{0};       // 0..kBufferSize-1
+  std::atomic<unsigned> count{0};  // 0..kBufferSize
   std::condition_variable nonempty, nonfull;
   std::mutex mtx;
 
@@ -46,7 +48,12 @@ class BoundedBuffer {
 
   std::optional<Portion> remove() {
     std::unique_lock<std::mutex> lck(mtx);
-    nonempty.wait(lck, [&] { return !(0 == count); });
+    // This wait for time may cause data races
+    const auto isTimeout =
+        !nonempty.wait_for(lck, kTimeout, [&] { return !(0 == count); });
+    if (isTimeout) {
+      return std::nullopt;
+    }
 
     // assert(count <= kBufferSize);
     Portion portion = buffer[head++];

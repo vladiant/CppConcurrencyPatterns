@@ -5,6 +5,7 @@ project(producer_consumer_channel)
 add_executable(
     ${PROJECT_NAME}
     channel.hpp
+    selector.cpp
     main.cpp
 )
 

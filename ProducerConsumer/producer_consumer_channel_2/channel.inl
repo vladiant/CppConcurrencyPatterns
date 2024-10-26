@@ -10,8 +10,11 @@ constexpr channel<T>::channel(const size_type capacity) : cap_{capacity}
 template <typename T>
 channel<typename std::decay<T>::type>& operator<<(channel<typename std::decay<T>::type>& ch, T&& in)
 {
-    if (ch.closed()) {
-        throw closed_channel{"cannot write on closed channel"};
+    {
+        std::unique_lock<std::mutex> lock{ch.mtx_};
+        if (ch.closed()) {
+            throw closed_channel{"cannot write on closed channel"};
+        }
     }
 
     {

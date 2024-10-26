@@ -8,6 +8,8 @@
 
 #include "channel.hpp"
 
+constexpr int kMaxMessagesCount = 10;
+
 constexpr size_t kBufferSize = 3;
 
 std::atomic_uint messagesCount{0};
@@ -25,7 +27,7 @@ void process_portion_taken([[maybe_unused]] Portion&& portion) {}
 msd::channel<Portion> buffer{kBufferSize};
 
 void producer() {
-  for (;;) {
+  for (int i = 0; i < kMaxMessagesCount; i++) {
     Portion portion = produce_next_portion();
     buffer << portion;
   }

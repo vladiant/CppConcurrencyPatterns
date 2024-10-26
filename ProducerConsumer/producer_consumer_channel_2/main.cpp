@@ -14,6 +14,9 @@ constexpr size_t kBufferSize = 3;
 
 std::atomic_uint messagesCount{0};
 
+// printing only
+std::mutex printMutex;
+
 struct Portion {
   unsigned int data{};
 };
@@ -29,6 +32,14 @@ msd::channel<Portion> buffer{kBufferSize};
 void producer() {
   for (int i = 0; i < kMaxMessagesCount; i++) {
     Portion portion = produce_next_portion();
+
+    // Printing only
+    {
+      std::lock_guard lock{printMutex};
+      std::cout << std::this_thread::get_id() << "\tProduced: " << portion.data
+                << '\n';
+    }
+
     buffer << portion;
   }
 }
@@ -37,6 +48,13 @@ void consumer() {
   for (;;) {
     Portion portion;
     buffer >> portion;
+
+    // Printing only
+    {
+      std::lock_guard lock{printMutex};
+      std::cout << std::this_thread::get_id() << "\tConsumed: " << portion.data
+                << '\n';
+    }
   }
 }
 

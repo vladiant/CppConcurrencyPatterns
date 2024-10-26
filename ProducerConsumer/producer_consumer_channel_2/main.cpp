@@ -25,8 +25,9 @@ auto produce_next_portion() {
   return Portion{.data = messagesCount.fetch_add(1)};
 }
 
-void process_portion_taken([[maybe_unused]] Portion&& portion) {}
+void process_portion_taken([[maybe_unused]] const Portion& portion) {}
 
+// Thread sanitizers detect unlock attempts without locks held
 msd::channel<Portion> buffer{kBufferSize};
 
 void producer() {
@@ -40,21 +41,24 @@ void producer() {
                 << '\n';
     }
 
-    buffer << portion;
+    try {
+      buffer << portion;
+    } catch (msd::closed_channel& e) {
+      return;
+    }
   }
 }
 
 void consumer() {
-  for (;;) {
-    Portion portion;
-    buffer >> portion;
-
+  for (const auto& portion : buffer) {
     // Printing only
     {
       std::lock_guard lock{printMutex};
       std::cout << std::this_thread::get_id() << "\tConsumed: " << portion.data
                 << '\n';
     }
+
+    process_portion_taken(std::move(portion));
   }
 }
 
@@ -63,6 +67,14 @@ int main() {
   std::jthread t2{consumer};
   std::jthread t3{producer};
   std::jthread t4{consumer};
+
+  std::this_thread::sleep_for(std::chrono::seconds(2));
+  // Printing only
+  {
+    std::lock_guard lock{printMutex};
+    std::cout << "Close channel\n";
+    buffer.close();
+  }
 
   return 0;
 }

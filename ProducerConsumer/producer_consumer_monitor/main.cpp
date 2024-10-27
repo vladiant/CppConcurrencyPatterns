@@ -8,8 +8,6 @@ constexpr int kMaxMessagesCount = 10;
 
 constexpr int kBufferSize = 3;
 
-constexpr auto kTimeout = std::chrono::seconds(1);
-
 std::atomic_uint messagesCount{0};
 
 struct Portion {
@@ -28,11 +26,15 @@ class BoundedBuffer {
   std::atomic<unsigned> count{0};  // 0..kBufferSize
   std::condition_variable nonempty, nonfull;
   std::mutex mtx;
+  std::atomic_bool endSignal{false};
 
  public:
   void append(Portion&& portion) {
-    std::unique_lock<std::mutex> lck(mtx);
-    nonfull.wait(lck, [&] { return !(kBufferSize == count); });
+    std::unique_lock lck{mtx};
+    nonfull.wait(lck, [&] { return !(kBufferSize == count) || endSignal; });
+    if (endSignal) {
+      return;
+    }
 
     // assert(count < kBufferSize);
     std::cout << std::this_thread::get_id() << "\tAppend: " << portion.data
@@ -47,12 +49,10 @@ class BoundedBuffer {
   }
 
   std::optional<Portion> remove() {
-    std::unique_lock<std::mutex> lck(mtx);
-    // This wait for time may cause data races
-    const auto isTimeout =
-        !nonempty.wait_for(lck, kTimeout, [&] { return !(0 == count); });
-    if (isTimeout) {
-      return std::nullopt;
+    std::unique_lock lck{mtx};
+    nonempty.wait(lck, [&] { return !(0 == count) || endSignal; });
+    if (endSignal) {
+      return {};
     }
 
     // assert(count <= kBufferSize);
@@ -65,6 +65,12 @@ class BoundedBuffer {
     nonfull.notify_one();
 
     return portion;
+  }
+
+  void stop() {
+    endSignal = true;
+    nonempty.notify_all();
+    nonfull.notify_all();
   }
 };
 
@@ -92,6 +98,9 @@ int main() {
   std::jthread t2{consumer};
   std::jthread t3{producer};
   std::jthread t4{consumer};
+
+  std::this_thread::sleep_for(std::chrono::seconds(2));
+  buffer.stop();
 
   return 0;
 }

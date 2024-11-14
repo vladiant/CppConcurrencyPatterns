@@ -21,6 +21,7 @@
 ## Others
 * Event Loop
 * Producer/Consumer
+* Spinlock
 
 ## References
 * [Concurrency Patterns - Rainer Grimm - CppCon 2021](https://www.youtube.com/watch?v=A3DQxZCtKqo)

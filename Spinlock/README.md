@@ -8,6 +8,22 @@
 * Implementation is possible with atomic test-and-set operations.
 * Consider using exponential back-off to reduce load during wait.
 
+## Thread problems check
+* GCC sanitizer
+```
+   g++ main.cpp -fsanitize=thread -std=c++20 -o main.x
+```
+
+* Clang sanitizer (recommended)
+```
+   clang++ main.cpp -fsanitize=thread -std=c++20 -o main.x
+```
+
+* Valgrind [Helgrind](https://valgrind.org/docs/manual/hg-manual.html)
+
+   Produces false positives except for `pthread_spinlock_t`
+
+
 ## References
 * [Wikipedia Spinlock](https://en.wikipedia.org/wiki/Spinlock)
 * [OSDev Spinlock](https://wiki.osdev.org/Spinlock)

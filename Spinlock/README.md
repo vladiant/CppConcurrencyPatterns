@@ -7,6 +7,9 @@
 * Take into account the possibility of simultaneous access to the lock, which could cause race conditions.
 * Implementation is possible with atomic test-and-set operations.
 * Consider using exponential back-off to reduce load during wait.
+* Measure!
+* Don’t `std::thread::yield()` in a loop.
+* Don’t sleep
 
 ## Thread problems check
 * GCC sanitizer

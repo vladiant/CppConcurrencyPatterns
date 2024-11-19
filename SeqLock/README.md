@@ -20,3 +20,7 @@ n either case readers simply retry until they read the same even sequence number
 ## References
 * [Wikipedia Seqlock](https://en.wikipedia.org/wiki/Seqlock)
 * [Sequence counters and sequential locks](https://docs.kernel.org/locking/seqlock.html)
+* [std::shared_mutex](https://en.cppreference.com/w/cpp/thread/shared_mutex)
+* [std::shared_lock](https://en.cppreference.com/w/cpp/thread/shared_lock/lock)
+* [Synchronized Output Streams with C++20](https://www.linkedin.com/pulse/synchronized-outputstreams-c20-rainer-grimm)
+* <https://github.com/rigtorp/Seqlock/>

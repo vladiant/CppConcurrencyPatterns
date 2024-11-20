@@ -24,5 +24,5 @@ class Seqlock {
 
  private:
   mutable std::shared_mutex mSharedMutex;
-  T mSharedValue;
+  T mSharedValue{};
 };

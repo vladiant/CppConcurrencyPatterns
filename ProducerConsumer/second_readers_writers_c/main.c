@@ -83,5 +83,11 @@ int main() {
   pthread_join(w[1], NULL);
   pthread_join(r[4], NULL);
 
+  sem_destroy(&rcount_guard);
+  sem_destroy(&wsem);
+  sem_destroy(&wcount_guard);
+  sem_destroy(&rsem);
+  sem_destroy(&p_guard);
+
   return 0;
 }

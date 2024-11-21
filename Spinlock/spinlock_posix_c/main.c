@@ -34,5 +34,7 @@ int main() {
 
   printf("Sum: %ld\n", val);
 
+  pthread_spin_destroy(&sl);
+
   return 0;
 }

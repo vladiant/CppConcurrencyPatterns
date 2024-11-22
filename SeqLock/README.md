@@ -23,4 +23,6 @@ n either case readers simply retry until they read the same even sequence number
 * [std::shared_mutex](https://en.cppreference.com/w/cpp/thread/shared_mutex)
 * [std::shared_lock](https://en.cppreference.com/w/cpp/thread/shared_lock/lock)
 * [Synchronized Output Streams with C++20](https://www.linkedin.com/pulse/synchronized-outputstreams-c20-rainer-grimm)
+* [StackOverflow: how to implement a seqlock lock using c++11 atomic library](https://stackoverflow.com/questions/20342691/how-to-implement-a-seqlock-lock-using-c11-atomic-library)
 * <https://github.com/rigtorp/Seqlock/>
+* [std::hardware_destructive_interference_size](https://en.cppreference.com/w/cpp/thread/hardware_destructive_interference_size)

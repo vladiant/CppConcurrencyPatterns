@@ -16,6 +16,17 @@ n either case readers simply retry until they read the same even sequence number
 * If there is too much write activity or the reader is too slow, they might livelock and the readers may starve.
 * Does not work for data that contains pointers, because any writer could invalidate a pointer that a reader has already followed.
 * Impossible to step through it with a debugger!
+* The sanitizers and [helgrind](https://valgrind.org/docs/manual/hg-manual.html) tool will always suspect a data race due to missing lock!
+
+## Fuzz test arbitrary times
+| fuzz test Release build        | execution time |
+| ------------------------------ | -------------- |
+| test_seqlock_mutex_emulator    |  96.07 sec     |
+| test_seqlock_emulator          | 114.24 sec     |
+| test_seqlock_posix_emulator    | 116.49 sec     |
+| test_seqlock_naive             |   2.45 sec     |
+| test_seqlock_spinlock          |   0.64 sec     |
+| test_seqlock_rigtorp           |   1.16 sec     |
 
 ## References
 * [Wikipedia Seqlock](https://en.wikipedia.org/wiki/Seqlock)

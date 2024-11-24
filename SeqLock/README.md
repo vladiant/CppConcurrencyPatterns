@@ -28,6 +28,21 @@ n either case readers simply retry until they read the same even sequence number
 | test_seqlock_spinlock          |   0.64 sec     |
 | test_seqlock_rigtorp           |   1.16 sec     |
 
+## Perf data
+* Command
+```
+perf stat -e instructions,cpu-cycles,L1-dcache-loads,L1-dcache-load-misses,mem_inst_retired.lock_loads,duration_time
+```
+
+| Example Release build     | instructions | cpu-cycles | L1-dcache-loads | L1-dcache-load-misses | mem_inst_retired.lock_loads | duration_time |
+| ------------------------- | ------------ | ---------- | --------------- | --------------------- | --------------------------- | ------------- |
+| seqlock_mutex_emulator    | 4152610      | 4832960    | 1057729         | 53110                 | 11503                       | 1818663 ns    |
+| seqlock_emulator          | 4281531      | 4751058    | 1090099         | 54095                 | 13829                       | 3070747 ns    |
+| seqlock_posix_emulator    | 4176506      | 4689458    | 1064256         | 53317                 | 11170                       | 2992380 ns    |
+| seqlock_naive             | 4222576      | 4598630    | 1092859         | 53092                 |  9377                       | 2904287 ns    |
+| seqlock_spinlock          | 4543389      | 4671161    | 1212866         | 53894                 |  9323                       | 2933602 ns    |
+| seqlock_rigtorp           | 4394077      | 4769689    | 1147175         | 53246                 |  9732                       | 2724176 ns    |
+
 ## References
 * [Wikipedia Seqlock](https://en.wikipedia.org/wiki/Seqlock)
 * [Sequence counters and sequential locks](https://docs.kernel.org/locking/seqlock.html)

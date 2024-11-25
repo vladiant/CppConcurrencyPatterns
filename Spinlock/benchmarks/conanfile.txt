@@ -1,0 +1,9 @@
+[requires]
+benchmark/1.9.0
+
+[generators]
+CMakeToolchain
+CMakeDeps
+
+[layout]
+cmake_layout

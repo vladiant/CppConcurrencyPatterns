@@ -36,6 +36,9 @@
 | spinlock_atomic_flag_c | 2.53 ms | 7.86 ms | 36.8  ms  | 106.0 ms |
 | spinlock_posix_c       | 1.47 ms | 2.96 ms | 18.4  ms  |  60.1 ms |
 
+* <https://quick-bench.com/q/vJ2O7CXzMF6E_npt468jCEFTuiU>
+* <https://godbolt.org/z/h9dxqaTsK>
+
 ## References
 * [Wikipedia Spinlock](https://en.wikipedia.org/wiki/Spinlock)
 * [OSDev Spinlock](https://wiki.osdev.org/Spinlock)

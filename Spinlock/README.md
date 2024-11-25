@@ -34,4 +34,5 @@
 * [Implementing a spinlock in c++](https://medium.com/@amishav/implementing-a-spinlock-in-c-8078ec584efc)
 * [Correctly implementing a spinlock in C++](https://rigtorp.se/spinlock/)
 * [Spinlocks - Part 7](https://coffeebeforearch.github.io/2020/11/07/spinlocks-7.html)
+* <https://github.com/CoffeeBeforeArch/spinlocks/>
 

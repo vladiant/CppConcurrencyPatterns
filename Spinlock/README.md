@@ -27,6 +27,15 @@
    Produces false positives except for `pthread_spinlock_t`
 
 
+## Benchmark arbitrary times
+| Release build          | 1 core  | 2 cores | 3 cores   | 4 cores  |
+| ---------------------- | --------| ------- | --------  |  ------- |
+| audio_spin_mutex       | 3.90 ms | 1.86 ms | 13.7  ms  |  92.1 ms |
+| spinlock_atomic_bool   | 1.22 ms | 3.16 ms | 21.2  ms  |  52.2 ms | 
+| spinlock_atomic_flag   | 1.89 ms | 3.09 ms |  9.86 ms  |  39.0 ms |
+| spinlock_atomic_flag_c | 2.53 ms | 7.86 ms | 36.8  ms  | 106.0 ms |
+| spinlock_posix_c       | 1.47 ms | 2.96 ms | 18.4  ms  |  60.1 ms |
+
 ## References
 * [Wikipedia Spinlock](https://en.wikipedia.org/wiki/Spinlock)
 * [OSDev Spinlock](https://wiki.osdev.org/Spinlock)

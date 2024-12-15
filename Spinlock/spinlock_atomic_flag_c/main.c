@@ -31,7 +31,7 @@ void* inc(void* arg) {
   return NULL;
 }
 
-int main() {
+int main(void) {
   int64_t val = 0;
 
   pthread_t t1, t2;

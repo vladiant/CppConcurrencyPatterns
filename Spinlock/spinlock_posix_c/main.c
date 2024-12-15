@@ -19,7 +19,7 @@ void* inc(void* arg) {
   return NULL;
 }
 
-int main() {
+int main(void) {
   pthread_spin_init(&sl, PTHREAD_PROCESS_PRIVATE);
 
   int64_t val = 0;

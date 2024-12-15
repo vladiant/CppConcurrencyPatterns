@@ -22,6 +22,15 @@
    clang++ main.cpp -fsanitize=thread -std=c++20 -o main.x
 ```
 
+```
+   cmake .. -DUSE_TSAN=ON -DCMAKE_C_COMPILER=/usr/bin/clang
+```
+
+```
+   cmake .. -DUSE_TSAN=ON  -DCMAKE_CXX_COMPILER=/usr/bin/clang++
+```
+
+
 * Valgrind [Helgrind](https://valgrind.org/docs/manual/hg-manual.html)
 
    Produces false positives except for `pthread_spinlock_t`

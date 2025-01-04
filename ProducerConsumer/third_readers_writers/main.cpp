@@ -23,6 +23,9 @@ std::binary_semaphore serviceQueue{1};
 std::mutex readCountGuard;
 uint32_t readCount{0};
 
+// Can be replaced with std::binary_semaphore dataGuard{1}
+// thread sanitizer does not detect data race
+// valgrind detects data race
 std::mutex dataGuard;
 std::queue<int> data;
 

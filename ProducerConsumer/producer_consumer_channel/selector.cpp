@@ -1,5 +1,7 @@
 #include "selector.hpp"
 
+#include <algorithm>
+
 void Selector::select() {
   std::unique_lock<std::mutex> lock(mtx);
 

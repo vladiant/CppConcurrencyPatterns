@@ -15,6 +15,8 @@ constexpr size_t kBufferSize = 3;
 std::atomic_uint messagesCount{0};
 
 // printing only
+// thread sanitizer does not detect data race
+// valgrind detects data race
 std::mutex printMutex;
 
 struct Portion {

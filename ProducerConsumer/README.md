@@ -31,6 +31,12 @@ No thread shall be allowed to starve
 ### Simplest reader writer problem
 Uses only two semaphores and doesn't need an array of readers to read the data in buffer.
 
+## Single Producer Single Consumer
+* [Building Robust Inter-Process Queues in C++ - Jody Hagins - C++ on Sea 2025](https://www.youtube.com/watch?v=nX5CXx1gdEg)
+* [Writing a Fast and Versatile SPSC Ring Buffer](https://daugaard.org/blog/writing-a-fast-and-versatile-spsc-ring-buffer/)
+* <https://github.com/jodyhagins/DaugaardRingBuffer>
+* <https://github.com/jodyhagins/RigtorpSPSCQueue>
+
 ## References
 * [Producer–consumer problem](https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem)
 * [Readers–writers problem](https://en.wikipedia.org/wiki/Readers%E2%80%93writers_problem)

@@ -1,3 +1,5 @@
+#include <cstdio>
+#include <mutex>
 #include <thread>
 
 #include "RingBuffer_v1.hpp"
@@ -18,42 +20,44 @@ constexpr unsigned int N = 4;
 
 RingBuffer ringBuffer;
 
+std::mutex bufferMutex;
 Message buffer[N];
 
 std::atomic<unsigned> count{0};
 
 void producer() {
-  unsigned tail{0};
   for (int i = 0; i < kMaxMessages; i++) {
     Message message = produceMessage();
 
     ringBuffer.Write(message);
 
-    tail %= N;
+    {
+      std::lock_guard lock{bufferMutex};
+      printf("Produced: %d\n", message.data);
+    }
+    ringBuffer.FinishWrite();
+
     count.fetch_add(1, std::memory_order_relaxed);
   }
-
-  ringBuffer.FinishWrite();
 }
 
 void consumer() {
-  unsigned head{0};
   for (int i = 0; i < kMaxMessages; i++) {
     Message message = ringBuffer.Read<Message>();
+    {
+      std::lock_guard lock{bufferMutex};
+      printf("Consumed: %d\n", message.data);
+    }
 
-    head %= N;
     count.fetch_sub(1, std::memory_order_relaxed);
     consumeMessage(message);
-  }
 
-  // ringBuffer.FinishRead();
+    ringBuffer.FinishRead();
+  }
 }
 
 int main() {
-  // ringBuffer.Initialize(...);
-
-  // ringBuffer.PrepareWrite(...);
-  // ringBuffer.PrepareRead(...);
+  ringBuffer.Initialize(buffer, sizeof(buffer));
 
   std::thread t1(producer);
   std::thread t2(consumer);

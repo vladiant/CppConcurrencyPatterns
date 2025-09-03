@@ -1,3 +1,5 @@
+// https://daugaard.org/blog/writing-a-fast-and-versatile-spsc-ring-buffer/
+
 #include <cstdio>
 #include <mutex>
 #include <thread>

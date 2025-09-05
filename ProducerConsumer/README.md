@@ -36,6 +36,7 @@ Uses only two semaphores and doesn't need an array of readers to read the data i
 * [Writing a Fast and Versatile SPSC Ring Buffer](https://daugaard.org/blog/writing-a-fast-and-versatile-spsc-ring-buffer/)
 * <https://github.com/jodyhagins/DaugaardRingBuffer>
 * <https://github.com/jodyhagins/RigtorpSPSCQueue>
+* <https://github.com/AshleyRoll/arquebus>
 
 ## References
 * [Producer–consumer problem](https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem)

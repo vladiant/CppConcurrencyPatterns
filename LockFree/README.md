@@ -12,3 +12,4 @@
 * <https://github.com/erez-strauss/lockfree_mpmc_queue>
 * <https://github.com/max0x7ba/atomic_queue>
 * [Многопоточность в современном C++: Lock-Free программирование, Memory Ordering и Atomics](https://habr.com/ru/articles/963818/)
+* [Boost.Lockfree](https://theboostcpplibraries.com/boost.lockfree)

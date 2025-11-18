@@ -13,3 +13,5 @@
 * <https://github.com/max0x7ba/atomic_queue>
 * [Многопоточность в современном C++: Lock-Free программирование, Memory Ordering и Atomics](https://habr.com/ru/articles/963818/)
 * [Boost.Lockfree](https://theboostcpplibraries.com/boost.lockfree)
+* [Designing an SPSC Lock free queue - Quasar Chunawala - Meeting C++ 2025](https://www.youtube.com/watch?v=mus6djSJLLc)
+* <https://github.com/quasar-chunawala/concurrency_examples>

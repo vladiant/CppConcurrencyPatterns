@@ -46,4 +46,5 @@ Uses only two semaphores and doesn't need an array of readers to read the data i
 * [C++ Channel: A thread-safe container for sharing data between threads](https://blog.andreiavram.ro/cpp-channel-thread-safe-container-share-data-threads/)
 * <https://github.com/andreiavrammsd/cpp-channel/>
 * [User API & C++ Implementation of a Multi Producer, Multi Consumer, Lock Free, Atomic Queue - CppCon](https://www.youtube.com/watch?v=bjz_bMNNWRk), [code](https://github.com/erez-strauss/lockfree_mpmc_queue)
+* <https://github.com/bowtoyourlord/MPSCQueue>
 

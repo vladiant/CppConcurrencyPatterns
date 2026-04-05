@@ -16,3 +16,4 @@
 * [Designing an SPSC Lock free queue - Quasar Chunawala - Meeting C++ 2025](https://www.youtube.com/watch?v=mus6djSJLLc)
 * <https://github.com/quasar-chunawala/concurrency_examples>
 * [Optimizing a Lock-Free Ring Buffer for SPSC](https://david.alvarezrosa.com/posts/optimizing-a-lock-free-ring-buffer/)
+* [Optimizing a Lock-Free SPSC Queue](https://blog.c21-mac.com/posts/spsc/)

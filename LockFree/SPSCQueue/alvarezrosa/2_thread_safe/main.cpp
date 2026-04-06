@@ -1,4 +1,4 @@
-// https://habr.com/ru/articles/963818/
+// https://david.alvarezrosa.com/posts/optimizing-a-lock-free-ring-buffer/
 #include <array>
 #include <atomic>
 #include <chrono>

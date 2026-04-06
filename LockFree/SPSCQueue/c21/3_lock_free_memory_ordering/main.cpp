@@ -1,4 +1,4 @@
-// https://david.alvarezrosa.com/posts/optimizing-a-lock-free-ring-buffer/
+// https://blog.c21-mac.com/posts/spsc/
 #include <array>
 #include <atomic>
 #include <chrono>

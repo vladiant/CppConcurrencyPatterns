@@ -1,8 +1,15 @@
 // https://github.com/CoffeeBeforeArch/spinlocks/blob/main/spin_locally/spin_locally.cpp
 
+// https://github.com/CoffeeBeforeArch/spinlocks/blob/main/spin_locally/spin_locally.cpp
+
+// https://quick-bench.com/q/kpTWu-rqY_NywZp02IlINpLmi3c
+
 #include <benchmark/benchmark.h>
 #include <emmintrin.h>
+#include <linux/futex.h>
 #include <pthread.h>
+#include <sys/syscall.h>
+#include <unistd.h>
 
 #include <array>
 #include <atomic>
@@ -163,6 +170,38 @@ void inc(T &s, std::int64_t &val) {
   }
 }
 
+namespace futex_c {
+
+void futex_wait(std::atomic_int *addr, int expected) {
+  syscall(SYS_futex, addr, FUTEX_WAIT, expected, NULL, NULL, 0);
+}
+
+void futex_wake(std::atomic_int *addr, int threads = 1) {
+  syscall(SYS_futex, addr, FUTEX_WAKE, threads, NULL, NULL, 0);
+}
+
+class SpinLock {
+ public:
+  void lock() noexcept {
+    int unlocked = 0;
+    while (!state.compare_exchange_strong(unlocked, 1)) {
+      unlocked = 0;
+      futex_wait(&state, 1);
+    }
+  }
+
+  void unlock() noexcept {
+    state.store(0);
+    futex_wake(&state);
+  }
+
+ private:
+  // 0 - unlocked, 1 - locked
+  std::atomic_int state{0};
+};
+
+}  // namespace futex_c
+
 template <typename SpinLockT>
 void spinlock_benchmark(benchmark::State &s) {
   auto num_threads = s.range(0);
@@ -229,6 +268,16 @@ static void spinlock_posix_c(benchmark::State &s) {
 }
 
 BENCHMARK(spinlock_posix_c)
+    ->RangeMultiplier(2)
+    ->Range(1, std::thread::hardware_concurrency())
+    ->UseRealTime()
+    ->Unit(benchmark::kMillisecond);
+
+static void spinlock_futex_c(benchmark::State &s) {
+  spinlock_benchmark<futex_c::SpinLock>(s);
+}
+
+BENCHMARK(spinlock_futex_c)
     ->RangeMultiplier(2)
     ->Range(1, std::thread::hardware_concurrency())
     ->UseRealTime()

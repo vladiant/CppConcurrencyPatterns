@@ -10,6 +10,25 @@ This repository collects practical concurrency patterns for C++ and frames each 
 
 The patterns below are grouped by the kind of problem they usually solve: sharing state, mutating shared state, or structuring concurrent systems.
 
+## Quick decision tree: "I need X concurrency property → use Y pattern"
+
+- I need a result later, without blocking on every call → Future
+- I need each thread to own its own private state → Thread-Specific Storage
+- I need to avoid sharing mutable state entirely → Copied Value
+- I need a simple, safe lock for a small critical section → Scoped Locking
+- I need a lock strategy that can change with the workload → Strategized Locking
+- I need a consistent public API for shared mutable objects → Thread-Safe Interface
+- I need a thread to wait for a state change, then continue safely → Guarded Suspension
+- I need a dedicated worker to serialize requests → Active Object
+- I need a single synchronized object with condition-based waiting → Monitor Object
+- I need to handle many I/O or event sources efficiently → Reactor
+- I need ordered callback execution on one thread → Event Loop
+- I need producer/consumer decoupling with buffering → Producer/Consumer
+- I need locking that is extremely cheap for very short critical sections → Spinlock
+- I need read-mostly shared data with rare writes → Seqlock
+- I need the highest throughput on hot path containers → LockFree
+- I need data-parallel loops and reductions with minimal boilerplate → OpenMP
+
 ## Synchronization patterns
 
 ### Dealing with sharing

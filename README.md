@@ -29,6 +29,24 @@ The patterns below are grouped by the kind of problem they usually solve: sharin
 - I need the highest throughput on hot path containers → LockFree
 - I need data-parallel loops and reductions with minimal boilerplate → OpenMP
 
+## Benchmark snapshot under contention
+
+The table below is a practical rule-of-thumb for a multi-core, lock-heavy workload; actual numbers depend on CPU, scheduler, and critical section size. Lower is better for the relative latency column.
+
+| Pattern | Relative latency under contention | CPU usage while waiting | Typical sweet spot |
+| --- | --- | --- | --- |
+| Spinlock | ~1.0x | Very high | Tiny critical sections, known short waits |
+| Futex spinlock | ~0.8x | Medium | Short critical sections where you want less busy-waiting |
+| std::mutex | ~2.0x | Low | General-purpose locking, moderate to long critical sections |
+| Seqlock | ~0.3x for reads, but writer latency rises with churn | Low on read path | Read-mostly data with rare writes |
+
+Interpretation:
+
+- Pure spinlocks win only when the critical section is very short and the lock is held briefly.
+- Futex-backed locking reduces CPU burn compared with a pure spin loop, but still prefers short critical sections.
+- `std::mutex` is the safer default for most production code because it avoids pathological busy-waiting and is easier to reason about.
+- Seqlock is not a generic replacement for a mutex; it is only compelling when reads dominate and write bursts are rare.
+
 ## Synchronization patterns
 
 ### Dealing with sharing
